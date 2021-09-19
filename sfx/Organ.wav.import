@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Organ.wav-a671697a2422aa04a86c449fee663f39.sample"
+
+[deps]
+
+source_file="res://sfx/Organ.wav"
+dest_files=[ "res://.import/Organ.wav-a671697a2422aa04a86c449fee663f39.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

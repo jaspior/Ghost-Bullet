@@ -1,0 +1,81 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://sprites/Living Room.png" type="Texture" id=1]
+[ext_resource path="res://game.tres" type="Theme" id=2]
+[ext_resource path="res://fonts/Candyman-nRDq1.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://scripts/Splash.gd" type="Script" id=4]
+[ext_resource path="res://sfx/bang_01.ogg" type="AudioStream" id=5]
+
+[sub_resource type="Shader" id=8]
+code = "shader_type canvas_item;
+
+uniform float blue = 1; // you can assign a default value to uniform
+
+void fragment(){
+  COLOR = texture(TEXTURE, UV); //read from texture
+  COLOR.r = cos(TIME*1.0)*blue;
+  COLOR.y = cos(TIME*.50)*blue;
+}"
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = SubResource( 8 )
+shader_param/blue = 1.0
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="DynamicFont" id=7]
+size = 100
+font_data = ExtResource( 3 )
+
+[node name="Splash" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 2 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="TextureRect" parent="."]
+margin_right = 800.0
+margin_bottom = 600.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GhostBullet" type="Button" parent="."]
+material = SubResource( 9 )
+margin_left = 200.0
+margin_top = 200.0
+margin_right = 600.0
+margin_bottom = 400.0
+rect_rotation = -24.9
+rect_pivot_offset = Vector2( 200, 100 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.498039, 0.207843, 0.431373, 1 )
+custom_colors/font_color_hover = Color( 0.802979, 0.988281, 0.92288, 1 )
+custom_colors/font_color_pressed = Color( 0.161339, 0.389648, 0.309069, 1 )
+text = "Ghost Bullet"
+clip_text = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[connection signal="pressed" from="GhostBullet" to="." method="_on_GhostBullet_pressed"]
