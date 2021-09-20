@@ -19,6 +19,9 @@ var ghost_status = hide
 var points = 1000
 var player_name = "Nameless"
 
+func _ready():
+	$anim.play("start")
+	yield($anim,"animation_finished")
 
 func _process(delta):
 	shoot()
@@ -30,7 +33,7 @@ func _on_timer_animation_timeout():
 		$Animation/Animated_caffe.show()
 		$Animation/Animated_rain.hide()
 		rand = rand_range(0,100)
-		if rand >= 10:
+		if rand >= 30:
 			animation = rain
 		else: 
 			animation = spooky
@@ -49,6 +52,7 @@ func _on_timer_animation_timeout():
 		$Timers/points_timer.start()
 		ghost_transition()
 		ghost_status = on_screen
+		$Press_space.show()
 		$SFX/ghost.play()
 		if ghost <= pos4:
 			$Timers/ghost_hide.start()
@@ -109,6 +113,7 @@ func _on_ghost_hide_timeout():
 	$Ghosts/Ghost_360.hide()
 	$Ghosts/Ghost_close.hide()
 	$Timers/points_timer.stop()
+	$Press_space.hide()
 
 
 func _on_points_timer_timeout():
@@ -119,7 +124,8 @@ func _on_points_timer_timeout():
 		$anim.play("die")
 		yield($anim,"animation_finished")
 		points = 0 
-		$Leaderboard/Control/PopupPanel.popup_centered()
+		get_tree().reload_current_scene()
+		#$Leaderboard/Control/PopupPanel.popup_centered()
 
 
 func shoot():
@@ -138,9 +144,11 @@ func shoot():
 				points = points
 			
 			health = shot
-				
-			$Leaderboard/Control/MarginContainer/PopupPanel.popup_centered()
-
+			
+			if points > 0:
+				$Leaderboard/Control/MarginContainer/PopupPanel.popup_centered()
+			else:
+				get_tree().reload_current_scene()
 
 func _on_text_timers_timeout():
 	var random = randi()%4+1
